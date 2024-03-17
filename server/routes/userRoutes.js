@@ -1,7 +1,7 @@
-const ProfileController = require('../controllers/userController/profileController')
+const ProfileController = require("../controllers/userController/profileController");
 
-const router = require('express').Router()
+const router = require("express").Router();
 
-router.get('/user-profile',ProfileController)
+router.get("/user-profile", ProfileController);
 
-module.exports = router
+module.exports = router;

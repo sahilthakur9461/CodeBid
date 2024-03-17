@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from "react";
 import {
@@ -18,14 +18,14 @@ import {
   User,
   Pagination,
 } from "@nextui-org/react";
-import { BiChevronDown } from "react-icons/bi"; 
-import { AiOutlineSearch } from "react-icons/ai"; 
-import { BiDotsVerticalRounded } from "react-icons/bi"; 
+import { BiChevronDown } from "react-icons/bi";
+import { AiOutlineSearch } from "react-icons/ai";
+import { BiDotsVerticalRounded } from "react-icons/bi";
 
 import axios from "axios";
 
-import { AiOutlinePlus } from "react-icons/ai"; 
-import {columns, users, statusOptions, capitalize} from "../data/localData";
+import { AiOutlinePlus } from "react-icons/ai";
+import { columns, users, statusOptions, capitalize } from "../data/localData";
 // import {capitalize} from "./utils";
 
 const statusColorMap = {
@@ -34,13 +34,14 @@ const statusColorMap = {
   vacation: "warning",
 };
 
-
 const INITIAL_VISIBLE_COLUMNS = ["name", "username", "number", "actions"];
 
-export default function UserListTable({updateUserCount}) {
+export default function UserListTable({ updateUserCount }) {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-  const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
+  const [visibleColumns, setVisibleColumns] = React.useState(
+    new Set(INITIAL_VISIBLE_COLUMNS),
+  );
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortDescriptor, setSortDescriptor] = React.useState({
@@ -56,37 +57,40 @@ export default function UserListTable({updateUserCount}) {
   useEffect(() => {
     fetchUserList();
   }, []);
-  
-  
+
   const fetchUserList = async () => {
     try {
-        const response = await axios.get('http://localhost:4000/admin/user-list');
-        setUserList(response.data.userList);
+      const response = await axios.get("http://localhost:4000/admin/user-list");
+      setUserList(response.data.userList);
     } catch (error) {
-        console.error('Error fetching user count:', error);
+      console.error("Error fetching user count:", error);
     }
   };
-  const deleteUser= async(email)=>{
-    try{
-        const response = await axios.post('http://localhost:4000/admin/delete-user',{
-            email: email
-        });
-        if (response.data.message === 'User Delete Successfully') {
-            fetchUserList();
-            updateUserCount();
-
-        } else {
-            console.error('Error deleting user:', response.data.message);
-        }
-    }catch(e){
-        console.error('Error deleting user:', e);
+  const deleteUser = async (email) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/admin/delete-user",
+        {
+          email: email,
+        },
+      );
+      if (response.data.message === "User Delete Successfully") {
+        fetchUserList();
+        updateUserCount();
+      } else {
+        console.error("Error deleting user:", response.data.message);
+      }
+    } catch (e) {
+      console.error("Error deleting user:", e);
     }
-}
+  };
 
   const headerColumns = React.useMemo(() => {
     if (visibleColumns === "all") return columns;
 
-    return columns.filter((column) => Array.from(visibleColumns).includes(column.uid));
+    return columns.filter((column) =>
+      Array.from(visibleColumns).includes(column.uid),
+    );
   }, [visibleColumns]);
 
   const filteredItems = React.useMemo(() => {
@@ -97,7 +101,10 @@ export default function UserListTable({updateUserCount}) {
         user.name.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
-    if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
+    if (
+      statusFilter !== "all" &&
+      Array.from(statusFilter).length !== statusOptions.length
+    ) {
       filteredUsers = filteredUsers.filter((user) =>
         Array.from(statusFilter).includes(user.status),
       );
@@ -129,11 +136,11 @@ export default function UserListTable({updateUserCount}) {
     switch (columnKey) {
       case "name":
         return (
-          <User 
-            avatarProps={{radius: "full", size: "sm" , src: user.profileUrl}}
+          <User
+            avatarProps={{ radius: "full", size: "sm", src: user.profileUrl }}
             classNames={{
               description: "text-default-500 text-[#b0b1c6]",
-              name:"text-white"
+              name: "text-white",
             }}
             description={user.email}
             name={cellValue}
@@ -144,29 +151,31 @@ export default function UserListTable({updateUserCount}) {
       case "username":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-small text-white capitalize">{cellValue}</p>
-            <p className="text-bold text-tiny capitalize text-default-500">{user.location}</p>
+            <p className="text-bold text-small text-white capitalize">
+              {cellValue}
+            </p>
+            <p className="text-bold text-tiny capitalize text-default-500">
+              {user.location}
+            </p>
           </div>
         );
       case "number":
-        return (
-          <div className="text-white">
-            {cellValue}
-          </div>
-        );
+        return <div className="text-white">{cellValue}</div>;
       case "actions":
         return (
           <div className="relative flex justify-center items-center gap-2">
             <Dropdown className="bg-background border-1 border-default-200">
               <DropdownTrigger>
                 <Button isIconOnly radius="full" size="sm" variant="light">
-                  <BiDotsVerticalRounded  className="text-default-400" />
+                  <BiDotsVerticalRounded className="text-default-400" />
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
                 <DropdownItem>View</DropdownItem>
                 <DropdownItem>Edit</DropdownItem>
-                <DropdownItem onClick={()=> deleteUser(user.email)}>Delete</DropdownItem>
+                <DropdownItem onClick={() => deleteUser(user.email)}>
+                  Delete
+                </DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -180,7 +189,6 @@ export default function UserListTable({updateUserCount}) {
     setRowsPerPage(Number(e.target.value));
     setPage(1);
   }, []);
-
 
   const onSearchChange = React.useCallback((value) => {
     if (value) {
@@ -270,7 +278,9 @@ export default function UserListTable({updateUserCount}) {
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">Total {userList.length} users</span>
+          <span className="text-default-400 text-small">
+            Total {userList.length} users
+          </span>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
             <select
@@ -373,7 +383,9 @@ export default function UserListTable({updateUserCount}) {
       <TableBody emptyContent={"No users found"} items={sortedItems}>
         {(item) => (
           <TableRow key={item}>
-            {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+            {(columnKey) => (
+              <TableCell>{renderCell(item, columnKey)}</TableCell>
+            )}
           </TableRow>
         )}
       </TableBody>

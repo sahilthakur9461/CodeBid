@@ -1,6 +1,5 @@
 "use client";
 
-
 import { AiFillMessage } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { FaSearch, FaBell } from "react-icons/fa";
@@ -10,8 +9,8 @@ import ProjectShowingCard from "../../components/projectShowingCard";
 
 export default function Home() {
   const [profileImage, setProfileImage] = useState(null);
-  const [project, setProject]= useState([]);
-  const router = useRouter()
+  const [project, setProject] = useState([]);
+  const router = useRouter();
   useEffect(() => {
     fetchProfile();
     fetchProjects();
@@ -26,10 +25,10 @@ export default function Home() {
             authToken: localStorage.getItem("authToken"),
           },
           responseType: "arraybuffer",
-        }
+        },
       );
       const imageBase64 = Buffer.from(profile.data, "binary").toString(
-        "base64"
+        "base64",
       );
 
       setProfileImage(`data:image/png;base64,${imageBase64}`);
@@ -37,24 +36,21 @@ export default function Home() {
       console.error("Error fetching user count:", e);
     }
   };
-  
-  const fetchProjects = async ()=>{
+
+  const fetchProjects = async () => {
     try {
       const profile = await axios.get("http://localhost:4000/api/get-projects");
-      
-      setProject(profile.data.getProject)
-      
-      
+
+      setProject(profile.data.getProject);
     } catch (e) {
       console.error("Error fetching user count:", e);
     }
-  }
+  };
 
-  
-    const token = localStorage.getItem('authToken');
-      if (!token) {
-        router.push('/welcome');
-      }
+  const token = localStorage.getItem("authToken");
+  if (!token) {
+    router.push("/welcome");
+  }
   return (
     <div className="w-full flex flex-col">
       <div className="flex justify-around items-center w-full mt-4">
@@ -83,9 +79,9 @@ export default function Home() {
       <div className="p-6 w-full ">
         <span className="text-white font-Archivo ">FEATURED POSTS</span>
         <div className="flex flex-wrap mt-4 justify-stretch gap-5">
-        {project.map((projects, index)=>(
-        <ProjectShowingCard key={index} project={projects}/>
-        ))}
+          {project.map((projects, index) => (
+            <ProjectShowingCard key={index} project={projects} />
+          ))}
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 "use client";
+
 import { IoIosCamera } from "react-icons/io";
 import bg from "../../../../../public/login.jpg";
 import CustomInput from "@/components/customInput";
@@ -29,7 +30,7 @@ export default function CreateProfile() {
       reader.readAsDataURL(file);
     }
   };
-  const submit = async(e)=>{
+  const submit = async (e) => {
     e.preventDefault();
     try {
       const formData = new FormData();
@@ -40,18 +41,22 @@ export default function CreateProfile() {
       formData.append("name", name);
       formData.append("username", username);
       formData.append("location", location);
-      const response = await axios.post("http://localhost:4000/auth/register", formData, {
-        headers: { "Content-Type": "multipart/form-data" }, 
-      });
-        if (response.status === 201) {
-            router.push('/login');
-        } else {
-            console.error('Registration failed');
-        }
+      const response = await axios.post(
+        "http://localhost:4000/auth/register",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        },
+      );
+      if (response.status === 201) {
+        router.push("/login");
+      } else {
+        console.error("Registration failed");
+      }
     } catch (error) {
-        console.error('Error occurred:', error);
+      console.error("Error occurred:", error);
     }
-}
+  };
   return (
     <div className="bg-gray-900 h-screen w-full flex justify-center items-center">
       <div className="bg-login-bg w-4/5 h-4/5 flex ">
@@ -70,20 +75,27 @@ export default function CreateProfile() {
               <div className="flex items-center gap-4 mt-4">
                 <div className="flex justify-center items-center w-36 h-36 border-dotted border-white border-[3px] rounded-full">
                   {selectedImage ? (
-                    <img src={selectedImage} alt="Selected Avatar" className="w-full h-full rounded-full" />
+                    <img
+                      src={selectedImage}
+                      alt="Selected Avatar"
+                      className="w-full h-full rounded-full"
+                    />
                   ) : (
                     <IoIosCamera className="fill-white w-8 h-8" />
                   )}
                 </div>
                 <input
                   type="file"
-                  id="avatarInput" 
+                  id="avatarInput"
                   className="hidden"
                   onChange={handleImageChange}
                   name="profileImage"
                   required
                 />
-                <label htmlFor="avatarInput" className="cursor-pointer block text-sm text-white">
+                <label
+                  htmlFor="avatarInput"
+                  className="cursor-pointer block text-sm text-white"
+                >
                   Choose File
                 </label>
               </div>
@@ -104,7 +116,7 @@ export default function CreateProfile() {
           className="w-3/6"
           style={{
             backgroundImage: `url(${bg.src})`,
-            backgroundSize:  "cover",
+            backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         ></div>

@@ -6,29 +6,27 @@ import GetStartButton from "@/components/getStartBtn";
 import ProjectShowingCard from "@/components/projectShowingCard";
 import { useEffect, useState } from "react";
 
-
 export default function WelcomeScreen() {
-  const [project, setProject]= useState([]);
+  const [project, setProject] = useState([]);
 
-  
   const router = useRouter();
   const handleGetStartedClick = () => {
     router.push("/login");
   };
-  useEffect(()=>{
-    const fetchProjects = async ()=>{
+  useEffect(() => {
+    const fetchProjects = async () => {
       try {
-        const profile = await axios.get("http://localhost:4000/api/get-projects");
-        
-        setProject(profile.data.getProject)
-        
-        
+        const profile = await axios.get(
+          "http://localhost:4000/api/get-projects",
+        );
+
+        setProject(profile.data.getProject);
       } catch (e) {
         console.error("Error fetching user count:", e);
       }
-    }
-    fetchProjects()
-  },[]);
+    };
+    fetchProjects();
+  }, []);
   return (
     <div className="">
       <div
@@ -66,7 +64,7 @@ export default function WelcomeScreen() {
               tax effortless.
             </span>
           </div>
-          <GetStartButton getStartedClick={handleGetStartedClick}/>
+          <GetStartButton getStartedClick={handleGetStartedClick} />
         </header>
       </div>
       <section id="about" className="bg-[#07141e] p-10">
@@ -82,11 +80,12 @@ export default function WelcomeScreen() {
               developer, or enthusiast, CODEBID is your digital marketplace
               where innovation meets collaboration. Upload your designs, code
               snippets, or complete projects to reach a global audience eager to
-              discover and engage with your work.<br/>Get inspired by browsing
-              through a diverse range of projects, connect with fellow creators
-              through seamless messaging, and even purchase projects to
-              accelerate your own development journey. Join us at CODEBID and
-              let your creativity thrive!
+              discover and engage with your work.
+              <br />
+              Get inspired by browsing through a diverse range of projects,
+              connect with fellow creators through seamless messaging, and even
+              purchase projects to accelerate your own development journey. Join
+              us at CODEBID and let your creativity thrive!
             </span>
             <GetStartButton getStartedClick={handleGetStartedClick} />
           </div>
@@ -94,12 +93,11 @@ export default function WelcomeScreen() {
         <div className="flex justify-center mt-20 flex-col items-center ">
           <span className="text-white font-bold mb-5 text-4xl">Explore</span>
           <div className=" w-full flex flex-wrap justify-center">
-          {project.map((projects, index)=>(
-        <ProjectShowingCard key={index} project={projects}/>
-        ))}
+            {project.map((projects, index) => (
+              <ProjectShowingCard key={index} project={projects} />
+            ))}
           </div>
         </div>
-        
       </section>
     </div>
   );

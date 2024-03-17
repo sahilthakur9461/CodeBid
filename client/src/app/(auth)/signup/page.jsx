@@ -18,13 +18,12 @@ export default function Signup() {
 
   const submit = async (e) => {
     e.preventDefault();
-    if(number.length ===10){
+    if (number.length === 10) {
       router.push(`/signup/create-profile?${searchParams.toString()}`);
-    }else{
+    } else {
       const errorMessage = document.querySelector(".error-message");
       errorMessage.classList.remove("hidden");
     }
-
   };
   return (
     <div className="bg-gray-900 h-screen w-full flex justify-center items-center">
@@ -66,7 +65,9 @@ export default function Signup() {
                 onChange={(e) => setNumber(e.target.value)}
                 type={"text"}
               />
-              <span className="text-sm text-red-600 error-message hidden">*Enter correct number</span>
+              <span className="text-sm text-red-600 error-message hidden">
+                *Enter correct number
+              </span>
               <span className="text-white text-sm mt-4">Email*</span>
               <CustomInput
                 type={"email"}
