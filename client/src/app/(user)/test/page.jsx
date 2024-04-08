@@ -3,11 +3,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="bg-[#211F22] h-screen flex">
-      <div className="bg-[#0F0D0E] py-4 px-6  flex  flex-col gap-[4px] ">
-        <div className="h-1 w-16 rounded-l-full  rounded-r-full bg-white"></div>
-        <div className="h-1 w-8 rounded-l-full  rounded-r-full bg-white"></div>
-      </div>
+    <div className="bg-[#ffffff] h-screen flex">
       <div className="w-full">
         <nav className="py-3 w-full px-8">
           <div className=" flex justify-between">
@@ -38,8 +34,7 @@ const page = () => {
         <div className="flex w-full justify-between px-8 py-2">
             <div className="bg-[#282627] w-[600px] h-[480px] rounded-3xl"></div>
             <div className="flex flex-col gap-10 mx-8"> 
-                <div className="bg-[#282627] w-[400px] h-[220px] rounded-3xl  "></div>
-                <div className="bg-[#282627] w-[400px] h-[220px] rounded-3xl "></div>
+                <div className="bg-[#282627] w-[400px] h-[480px] rounded-3xl  "></div>
             </div>
         </div>
       </div>
